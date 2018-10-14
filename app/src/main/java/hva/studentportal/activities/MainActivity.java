@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         addPortal = findViewById(R.id.btn_add_portal);
         recyclerView = findViewById(R.id.recyclerView);
         portalList = new ArrayList<>();
+        //Items are in a grid of 3 spans (So one row has 3 items)
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
         updateUI();
@@ -47,18 +48,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddPortalActivity.class);
+                //Allows results to be delivered back to this activity
                 startActivityForResult(intent, REQUESTCODE);
             }
         });
     }
 
-    //Goes to the webview
+    //Go's to the webview
     private void viewPortal(Context context, Portal portal) {
         Intent intent = new Intent(context, ViewPortalActivity.class);
         intent.putExtra(TAGTWO, portal);
         startActivity(intent);
     }
 
+    //Creates new adapter and sets the recyclerview or updates the view
     private void updateUI() {
         if (portalAdapter == null) {
             portalAdapter = new PortalAdapter(portalList, new PortalAdapter.onItemClickListener() {
